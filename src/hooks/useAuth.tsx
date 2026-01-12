@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import type { User } from "../types";
 import { apiServer } from "./apiServer";
+import { Navigate } from "react-router-dom";
 
 interface AuthContextType {
   user: User | null;
@@ -12,8 +13,27 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>();
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const fetchCurrentUser = async () => {
+    try {
+      const res = await apiServer.get<User>("/api/v1/users/me");
+      setUser(res.data);
+      <Navigate to="/dashboard" replace />;
+      return { error: null };
+    } catch (err: any) {
+      setUser(null);
+      <Navigate to="/" replace />;
+      return { error: err };
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await fetchCurrentUser();
+    })();
+  }, []);
 
   const signIn = async (username: string, password: string) => {
     setLoading(true);
@@ -22,30 +42,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       params.append("username", username);
       params.append("password", password);
 
-      const res = await apiServer.post("/authentication", params, {
+      await apiServer.post("/authentication", params, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      try {
-        const me = await apiServer.get<User>("/api/v1/users/me");
-        setUser(me.data);
-        console.log("Usuario:", me.data);
-      } catch (e) {}
+      const result = await fetchCurrentUser();
       setLoading(false);
-      return { error: null };
+      return result;
     } catch (error: any) {
       setLoading(false);
-      return { error };
+      return { error: error };
     }
   };
 
   const signUp = async (username: string, password: string) => {
     setLoading(true);
     try {
-      const res = await apiServer.post("/api/register", { username, password });
-      await signIn(username, password);
+      await apiServer.post("/api/register", { username, password });
+      const result = await signIn(username, password);
       setLoading(false);
-      return { error: null };
+      return result;
     } catch (error: any) {
       setLoading(false);
       return { error };

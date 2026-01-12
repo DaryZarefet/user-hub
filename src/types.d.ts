@@ -10,4 +10,11 @@
 
 export type User = {
   name: string;
+  username: string;
+  roles: Role[];
+};
+
+export type Role = {
+  name: string;
+  deleted: boolean;
 };

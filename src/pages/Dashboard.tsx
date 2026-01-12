@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { UserCard } from "@/components/UserCard";
-import { RoleBadge } from "@/components/RoleBadge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, ShieldCheck, Shield, User as UserIcon, Search, Loader2, Grid } from "lucide-react";
+import { Users, ShieldCheck, Shield, User as UserIcon, Search, Loader2 } from "lucide-react";
 import { WaveDecoration } from "@/components/WaveDecoration";
 import { useGetUsers } from "@/hooks/use-user";
-import { User } from "@/types";
 import { GridCard } from "@/components/GridCard";
 
 export default function Dashboard() {
-  const { user, loading: authLoading } = useAuth();
-  const navigate = useNavigate();
+  const { loading: authLoading } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
-
-  useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/");
-    }
-  }, [user, authLoading, navigate]);
 
   if (authLoading) {
     return (
@@ -33,6 +23,7 @@ export default function Dashboard() {
   }
 
   const { isLoading, results: users } = useGetUsers({ queryKey: ["users"], params: { limit: 10 } });
+  console.log(users);
 
   const stats = {
     total: users?.length,
@@ -113,7 +104,8 @@ export default function Dashboard() {
         </Card>
 
         {/* Role Legend */}
-        <Card className="mt-8 border-0 bg-card/95 backdrop-blur-sm shadow-lg">
+
+        {/* <Card className="mt-8 border-0 bg-card/95 backdrop-blur-sm shadow-lg">
           <CardHeader>
             <CardTitle className="text-lg text-foreground">Tipos de Roles</CardTitle>
             <CardDescription>Descripción de los roles disponibles en el sistema</CardDescription>
@@ -134,7 +126,7 @@ export default function Dashboard() {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </main>
 
       {/* Wave decoration */}
