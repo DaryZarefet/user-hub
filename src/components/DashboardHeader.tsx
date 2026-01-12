@@ -1,6 +1,6 @@
-import { useAuth } from '@/hooks/useAuth';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,21 +8,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { LogOut, User } from 'lucide-react';
-import { XaviaLogo } from '@/components/XaviaLogo';
+} from "@/components/ui/dropdown-menu";
+import { LogOut, User } from "lucide-react";
+import { XaviaLogo } from "@/components/XaviaLogo";
 
 export function DashboardHeader() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
-  const initials = user?.user_metadata?.full_name
-    ? user.user_metadata.full_name
-        .split(' ')
-        .map((n: string) => n[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2)
-    : user?.email?.slice(0, 2).toUpperCase() || 'U';
+  const initials = user?.name
+    .split(" ")
+    .map((n: string) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-xavia-cream/10 bg-xavia-brown/95 backdrop-blur supports-[backdrop-filter]:bg-xavia-brown/80">
@@ -41,25 +39,16 @@ export function DashboardHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:bg-xavia-cream/10">
               <Avatar className="h-10 w-10 border-2 border-primary/30">
-                <AvatarImage 
-                  src={user?.user_metadata?.avatar_url} 
-                  alt={user?.user_metadata?.full_name || user?.email || 'Usuario'} 
-                />
-                <AvatarFallback className="bg-primary/20 text-primary font-semibold">
-                  {initials}
-                </AvatarFallback>
+                {/* <AvatarImage src={user?.user_metadata?.avatar_url} alt={user?.user_metadata?.full_name || user?.email || "Usuario"} /> */}
+                <AvatarFallback className="bg-primary/20 text-primary font-semibold">{initials}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 bg-card border-border" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none text-foreground">
-                  {user?.user_metadata?.full_name || 'Usuario'}
-                </p>
-                <p className="text-xs leading-none text-muted-foreground">
-                  {user?.email}
-                </p>
+                {/* <p className="text-sm font-medium leading-none text-foreground">{user?.user_metadata?.full_name || "Usuario"}</p> */}
+                <p className="text-xs leading-none text-muted-foreground">{user?.name}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -68,13 +57,10 @@ export function DashboardHeader() {
               Mi Perfil
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem 
-              className="gap-2 text-destructive focus:text-destructive cursor-pointer"
-              onClick={signOut}
-            >
+            {/* <DropdownMenuItem className="gap-2 text-destructive focus:text-destructive cursor-pointer" onClick={signOut}>
               <LogOut className="h-4 w-4" />
               Cerrar Sesión
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

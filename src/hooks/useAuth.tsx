@@ -1,82 +1,64 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import { createContext, useContext, useState, ReactNode } from "react";
+import type { User } from "../types";
+import { apiServer } from "./apiServer";
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null }>;
-  signOut: () => Promise<void>;
+  signIn: (username: string, password: string) => Promise<{ error: Error | null }>;
+  signUp: (username: string, password: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
-      }
-    );
+  const signIn = async (username: string, password: string) => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("username", username);
+      params.append("password", password);
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+      const res = await apiServer.post("/authentication", params, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      });
+
+      try {
+        const me = await apiServer.get<User>("/api/v1/users/me");
+        setUser(me.data);
+        console.log("Usuario:", me.data);
+      } catch (e) {}
       setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error: error as Error | null };
+      return { error: null };
+    } catch (error: any) {
+      setLoading(false);
+      return { error };
+    }
   };
 
-  const signUp = async (email: string, password: string, fullName?: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          full_name: fullName || '',
-        },
-      },
-    });
-    return { error: error as Error | null };
+  const signUp = async (username: string, password: string) => {
+    setLoading(true);
+    try {
+      const res = await apiServer.post("/api/register", { username, password });
+      await signIn(username, password);
+      setLoading(false);
+      return { error: null };
+    } catch (error: any) {
+      setLoading(false);
+      return { error };
+    }
   };
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, session, loading, signIn, signUp, signOut }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading, signIn, signUp }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
