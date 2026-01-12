@@ -2,122 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* XAVIA OAuth Design System
+   Colors: Green/Emerald, Dark Brown, Yellow-Green gradients
 */
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    --background: 30 20% 96%;
+    --foreground: 20 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 20 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 20 20% 15%;
 
-    --primary: 217 91% 60%;
+    --primary: 145 63% 35%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 80 55% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 30 15% 90%;
+    --muted-foreground: 20 15% 45%;
 
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 65 70% 50%;
+    --accent-foreground: 20 20% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --border: 30 15% 85%;
+    --input: 30 15% 85%;
+    --ring: 145 63% 35%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 20 25% 15%;
+    --sidebar-foreground: 40 30% 95%;
+    --sidebar-primary: 145 63% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 20 20% 25%;
+    --sidebar-accent-foreground: 40 30% 95%;
+    --sidebar-border: 20 20% 25%;
+    --sidebar-ring: 145 63% 45%;
 
     /* Custom tokens */
-    --success: 142 76% 36%;
+    --success: 145 63% 35%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 45 93% 47%;
+    --warning-foreground: 20 20% 15%;
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
     /* Role colors */
-    --role-admin: 0 84% 60%;
-    --role-moderator: 38 92% 50%;
-    --role-user: 217 91% 60%;
+    --role-admin: 0 84% 55%;
+    --role-moderator: 45 93% 47%;
+    --role-user: 145 63% 40%;
+
+    /* XAVIA Brand Colors */
+    --xavia-green: 145 63% 35%;
+    --xavia-lime: 80 65% 50%;
+    --xavia-yellow: 55 85% 55%;
+    --xavia-brown: 20 25% 15%;
+    --xavia-cream: 40 30% 95%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(199 89% 48%) 100%);
-    --gradient-sidebar: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(217 33% 17%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(145 63% 35%) 0%, hsl(80 65% 50%) 100%);
+    --gradient-wave: linear-gradient(90deg, hsl(145 63% 35%) 0%, hsl(80 65% 50%) 50%, hsl(55 85% 55%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(30 20% 98%) 100%);
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
+    --background: 20 25% 8%;
+    --foreground: 40 30% 95%;
 
-    --card: 222 47% 9%;
-    --card-foreground: 210 40% 98%;
+    --card: 20 25% 12%;
+    --card-foreground: 40 30% 95%;
 
-    --popover: 222 47% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 20 25% 12%;
+    --popover-foreground: 40 30% 95%;
 
-    --primary: 217 91% 60%;
+    --primary: 145 63% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 80 55% 45%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 20 20% 20%;
+    --muted-foreground: 30 15% 60%;
 
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 65 70% 50%;
+    --accent-foreground: 20 20% 10%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 40 30% 95%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 217 91% 60%;
+    --border: 20 20% 20%;
+    --input: 20 20% 20%;
+    --ring: 145 63% 45%;
 
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 20 25% 6%;
+    --sidebar-foreground: 40 30% 95%;
+    --sidebar-primary: 145 63% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 20 20% 18%;
+    --sidebar-accent-foreground: 40 30% 95%;
+    --sidebar-border: 20 20% 18%;
+    --sidebar-ring: 145 63% 45%;
 
-    --success: 142 76% 36%;
+    --success: 145 63% 45%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 45 93% 47%;
+    --warning-foreground: 20 20% 10%;
     --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
 
-    --role-admin: 0 84% 60%;
-    --role-moderator: 38 92% 50%;
-    --role-user: 217 91% 60%;
+    --role-admin: 0 84% 55%;
+    --role-moderator: 45 93% 47%;
+    --role-user: 145 63% 45%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(199 89% 48%) 100%);
-    --gradient-sidebar: linear-gradient(180deg, hsl(222 47% 6%) 0%, hsl(217 33% 17%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(222 47% 9%) 0%, hsl(222 47% 11%) 100%);
+    --xavia-green: 145 63% 45%;
+    --xavia-lime: 80 65% 50%;
+    --xavia-yellow: 55 85% 55%;
+    --xavia-brown: 20 25% 8%;
+    --xavia-cream: 40 30% 95%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(145 63% 45%) 0%, hsl(80 65% 50%) 100%);
+    --gradient-wave: linear-gradient(90deg, hsl(145 63% 45%) 0%, hsl(80 65% 50%) 50%, hsl(55 85% 55%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(20 25% 12%) 0%, hsl(20 25% 15%) 100%);
   }
 }
 
@@ -128,5 +141,35 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Wave decoration styles */
+.wave-decoration {
+  position: absolute;
+  width: 200%;
+  height: 100px;
+  background: var(--gradient-wave);
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: wave 8s ease-in-out infinite;
+}
+
+.wave-decoration:nth-child(2) {
+  animation-delay: -2s;
+  opacity: 0.2;
+}
+
+.wave-decoration:nth-child(3) {
+  animation-delay: -4s;
+  opacity: 0.15;
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: translateX(-25%) translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(-25%) translateY(10px) rotate(2deg);
   }
 }

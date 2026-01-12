@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -69,10 +74,15 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
-        role: {
-          admin: "hsl(var(--role-admin))",
-          moderator: "hsl(var(--role-moderator))",
-          user: "hsl(var(--role-user))",
+        "role-admin": "hsl(var(--role-admin))",
+        "role-moderator": "hsl(var(--role-moderator))",
+        "role-user": "hsl(var(--role-user))",
+        xavia: {
+          green: "hsl(var(--xavia-green))",
+          lime: "hsl(var(--xavia-lime))",
+          yellow: "hsl(var(--xavia-yellow))",
+          brown: "hsl(var(--xavia-brown))",
+          cream: "hsl(var(--xavia-cream))",
         },
       },
       borderRadius: {
@@ -82,20 +92,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
