@@ -15,6 +15,7 @@ export type User = {
 };
 
 export type Role = {
+  id?: string;
   name: string;
   deleted: boolean;
 };

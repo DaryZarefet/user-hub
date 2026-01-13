@@ -1,14 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Mail, Calendar } from "lucide-react";
 import { User } from "@/types";
 import { RoleBadge } from "./RoleBadge";
 
-interface UserCardProps {
-  user: User;
-}
-
-export const UserCard = ({ user }: UserCardProps) => {
+export const UserCard = (user: User) => {
   const { username, roles } = user;
 
   const initials = username
