@@ -5,7 +5,7 @@ import type { Role } from "@/types";
 export function useGetRoles({ queryKey, params }) {
   const { data, isPending, isFetching, isError, error, refetch, isLoading } = useQuery({
     queryKey,
-    queryFn: async () => await apiServer.get("/api/v1/roles", { params: params }).then((r) => r.data),
+    queryFn: async () => await apiServer.get("/api/v1/roles", { params }).then((r) => r.data),
   });
 
   return {
