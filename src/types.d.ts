@@ -19,3 +19,13 @@ export type Role = {
   name: string;
   deleted: boolean;
 };
+
+export type Client = {
+  id?: string;
+  name: string;
+  secret: string;
+  grants: number[];
+  authenticationMethods: number[];
+  scopes: string;
+  urls: string;
+};

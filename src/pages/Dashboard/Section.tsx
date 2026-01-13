@@ -2,6 +2,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Skeleton } from "@/components/ui/skeleton";
 import { Seeker } from "./Seeker";
 
+interface SectionProps {
+  loading: boolean;
+  filterdata: any[];
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  Icon: any;
+  Component: any;
+  placeholderNotFound: string;
+  placeholderNoData: string;
+  cardtitle: string;
+  carddescription: string;
+  setObj?: React.Dispatch<React.SetStateAction<any>>;
+  setIsCreateOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  openEdit?: (object: any) => void;
+  openDelete?: (object: any) => void;
+}
+
 export const Section = ({
   loading,
   filterdata,
@@ -13,7 +30,11 @@ export const Section = ({
   placeholderNoData,
   cardtitle,
   carddescription,
-}) => {
+  setObj,
+  setIsCreateOpen,
+  openEdit,
+  openDelete,
+}: SectionProps) => {
   return (
     <Card className="border-0 bg-card/95 backdrop-blur-sm shadow-lg">
       <CardHeader>
@@ -22,7 +43,14 @@ export const Section = ({
             <CardTitle className="text-xl text-foreground">{cardtitle}</CardTitle>
             <CardDescription>{carddescription}</CardDescription>
           </div>
-          <Seeker searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder="Buscar usuarios..." />
+          <Seeker
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            placeholder="Buscar usuarios..."
+            setObj={setObj}
+            setIsCreateOpen={setIsCreateOpen}
+            buttonAdd={"Crear"}
+          />
         </div>
       </CardHeader>
 
@@ -43,7 +71,7 @@ export const Section = ({
               </Card>
             ))}
           </div>
-        ) : filterdata?.length === 0 ? (
+        ) : filterdata?.length === 0 || !filterdata ? (
           <div className="text-center py-12">
             <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
               <Icon className="h-8 w-8 text-muted-foreground" />
@@ -56,7 +84,7 @@ export const Section = ({
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filterdata?.map((userItem) => (
-              <Component {...userItem} key={userItem.id} />
+              <Component object={userItem} openEdit={openEdit} openDelete={openDelete} key={userItem.id} />
             ))}
           </div>
         )}

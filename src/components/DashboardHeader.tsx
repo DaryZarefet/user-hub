@@ -24,6 +24,12 @@ export function DashboardHeader() {
     ?.toUpperCase()
     ?.slice(0, 2);
 
+  const menuitems = [
+    { name: "Usuarios", path: "/dashboard", icon: Users },
+    { name: "Roles", path: "/roles", icon: ShieldCheck },
+    { name: "Clientes", path: "/clients", icon: ShieldCheck },
+  ];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b  backdrop-blur">
       <div className="container flex h-16 items-center justify-between px-4">
@@ -51,24 +57,25 @@ export function DashboardHeader() {
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="w-56 bg-card border-border" align="end" forceMount>
+          <DropdownMenuContent key="key-dropdown" className="w-56 bg-card border-border" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
                 <p className="text-xs leading-none text-muted-foreground">{user?.name}</p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/dashboard")} className="gap-2 cursor-pointer">
-              <Users className="h-4 w-4" />
-              Usuarios
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/roles")} className="gap-2 cursor-pointer">
-              <ShieldCheck className="h-4 w-4" />
-              Roles
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut} className="gap-2 text-destructive focus:text-destructive cursor-pointer">
+
+            {menuitems.map((item) => (
+              <>
+                <DropdownMenuItem key={item.name} onClick={() => navigate(item.path)} className="gap-2 cursor-pointer">
+                  <item.icon className="h-4 w-4" />
+                  {item.name}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </>
+            ))}
+
+            <DropdownMenuItem key="hi" onClick={signOut} className="gap-2 text-destructive focus:text-destructive cursor-pointer">
               <LogOut className="h-4 w-4" />
               Cerrar Sesión
             </DropdownMenuItem>

@@ -10,15 +10,11 @@ import { Layout } from "../Layout";
 export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { isLoading: loading, results: users } = useGetUsers({ queryKey: ["users"], params: { limit: 10 } });
+  const { isLoading, results: users } = useGetUsers({ queryKey: ["users"], params: { limit: 10 } });
   const { data: roles } = useGetRoles({ queryKey: ["roles"], params: { limit: 10 } });
 
   const statsusers = {
     total: users?.length,
-  };
-
-  const statsroles = {
-    total: roles?.length,
   };
 
   const filteredUsers = users?.filter((u) => u.username?.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -28,14 +24,13 @@ export default function Dashboard() {
       {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 mb-8">
         <GridCard title="Total Usuarios" stats={statsusers?.total} Icon={Users} />
-        <GridCard title="Total de Roles" stats={statsroles?.total} Icon={ShieldCheck} />
       </div>
 
       {/* Users Section */}
       <Section
         cardtitle={"Usuarios y Roles"}
         carddescription={"Lista de usuarios registrados y sus roles asignados"}
-        loading={loading}
+        loading={isLoading}
         filterdata={filteredUsers}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

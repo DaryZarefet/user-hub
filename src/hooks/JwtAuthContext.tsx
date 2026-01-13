@@ -71,18 +71,10 @@ export const AuthProvider = ({ children }) => {
       params.append("username", username);
       params.append("password", password);
 
-      const data = await apiServer.post("/authentication", params, {
+      await apiServer.post("/authentication", params, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      console.log("ESTA ES LA DATA:", data);
-      console.log("ESTA ES LA DATA---DATA:", data?.data?.length);
-
-      if ((data?.data as any)?.length == 3164 || data?.data?.length == 3741) {
-        console.log("Invalid login credentials");
-
-        throw new Error("Invalid login credentials");
-      }
       navigate("/dashboard");
     } catch (error: any) {
     } finally {

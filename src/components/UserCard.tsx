@@ -3,8 +3,12 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User } from "@/types";
 import { RoleBadge } from "./RoleBadge";
 
-export const UserCard = (user: User) => {
-  const { username, roles } = user;
+interface UserCardProps {
+  object: User;
+}
+
+export const UserCard = ({ object }: UserCardProps) => {
+  const { username, roles } = object;
 
   const initials = username
     ?.split(" ")
