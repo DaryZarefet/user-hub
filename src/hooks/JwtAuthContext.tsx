@@ -75,8 +75,11 @@ export const AuthProvider = ({ children }) => {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
+      await getProfile();
+
       navigate("/dashboard");
     } catch (error: any) {
+      
     } finally {
       setLoading(false);
     }

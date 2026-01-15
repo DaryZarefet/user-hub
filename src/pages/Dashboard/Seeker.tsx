@@ -13,7 +13,7 @@ interface SeekerProps {
 
 export const Seeker = ({ searchTerm, setSearchTerm, placeholder, setObj, setIsCreateOpen, buttonAdd }: SeekerProps) => {
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 items-center">
       <div className="relative w-full sm:w-72">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input placeholder={placeholder} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-10 bg-background border-input" />

@@ -25,6 +25,7 @@ export const LoginForm = () => {
 
     try {
       await signIn(username, password);
+
       navigate("/dashboard");
     } catch (error) {
       toast({

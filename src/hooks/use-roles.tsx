@@ -4,7 +4,7 @@ import type { Role } from "@/types";
 
 export function useGetRoles({ queryKey, params }) {
   const { data, isPending, isFetching, isError, error, refetch, isLoading } = useQuery({
-    queryKey,
+    queryKey: [queryKey, params],
     queryFn: async () => await apiServer.get("/api/v1/roles", { params }).then((r) => r.data),
   });
 
@@ -22,7 +22,7 @@ export function useGetRoles({ queryKey, params }) {
 export function useCreateRole() {
   const { data, isPending, isError, error, mutateAsync } = useMutation({
     mutationFn: async (data: Role) => {
-      const { data: response } = await apiServer.post("/api/v1/roles/", data).then((r) => r.data);
+      const { data: response } = await apiServer.post("/api/v1/roles", data).then((r) => r.data);
       return response;
     },
   });
@@ -39,7 +39,7 @@ export function useCreateRole() {
 export function useUpdateRole() {
   const { data, isPending, isError, error, mutateAsync } = useMutation({
     mutationFn: async (data: Role) => {
-      const { data: response } = await apiServer.put("/api/v1/roles/", data).then((r) => r.data);
+      const { data: response } = await apiServer.put(`/api/v1/roles/${data.id}`, data).then((r) => r.data);
       return response;
     },
   });

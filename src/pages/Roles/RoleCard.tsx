@@ -13,7 +13,7 @@ export const RoleCard = ({ object, openEdit, openDelete }: RoleCardProps) => {
   const { name, deleted } = object;
 
   return (
-    <Card key={name} className={`p-6 border-0 bg-muted/30 backdrop-blur-sm transition-all hover:shadow-lg ${deleted ? "opacity-60" : ""}`}>
+    <Card key={name} className={`p-6 border-0 bg-muted/30 backdrop-blur-sm transition-all hover:shadow-lg`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
